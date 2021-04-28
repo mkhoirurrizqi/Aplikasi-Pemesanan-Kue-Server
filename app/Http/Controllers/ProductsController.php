@@ -43,21 +43,21 @@ class ProductsController extends Controller
             $path = $request->file('file')->store('image');
             $req['file'] = $path;
         }
-        Laporan::create($req);
+        product::create($req);
         return response()->json(["token" => "sukses"]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  string  $laporan
+     * @param  string  $product
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
     {
-        $laporan = $request->id;
-        if (Laporan::where('id', $laporan)->exists()) {
-            $data = Laporan::find($laporan);
+        $product = $request->id;
+        if (product::where('id', $product)->exists()) {
+            $data = product::find($product);
             return response()->json($data->makeHidden('token'));
         } else {
             return response()->json([], 404);
