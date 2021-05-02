@@ -35,15 +35,18 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        $req = $request->all();
+        $product = new Product;
+        $product->user_id = $request->input('user_id');
+        $product->pd_name = $request->input('pd_name');
+        $product->pd_desc = $request->input('pd_desc');
+        $product->pd_status = $request->input('pd_status');
         if (
             $request->hasFile('file') and $request->file('file')
             ->isValid()
         ) {
-            $path = $request->file('file')->store('image');
-            $req['file'] = $path;
+            $product->pd_img = $request->file('file')->store('products');
         }
-        product::create($req);
+        $product->save();
         return response()->json(["token" => "sukses"]);
     }
 
