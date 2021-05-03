@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductsController;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,10 +18,16 @@ use App\Http\Controllers\ProductsController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+    Route::post('/logout', [UserController::class, 'logout']);
+});
+Route::post('/login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
-Route::post('login', [UserController::class, 'login']);
+// Route::post('login', [UserController::class, 'login']);
 Route::post('addproduct', [ProductsController::class, 'store']);

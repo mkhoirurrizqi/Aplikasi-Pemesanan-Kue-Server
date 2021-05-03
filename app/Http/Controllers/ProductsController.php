@@ -47,7 +47,8 @@ class ProductsController extends Controller
             $product->pd_img = $request->file('file')->store('products');
         }
         $product->save();
-        return response()->json(["token" => "sukses"]);
+        return response($product, 201);
+        // return response()->json(["token" => "sukses"]);
     }
 
     /**
@@ -66,16 +67,35 @@ class ProductsController extends Controller
             return response()->json([], 404);
         }
     }
-
+    public function showstoreproduct(Request $request)
+    {
+        $product = $request->user_id;
+        if (product::where('user_id', $product)->exists()) {
+            $data = product::find($product);
+            return response()->json($data->makeHidden('token'));
+        } else {
+            return response()->json([], 404);
+        }
+    }
+    public function showall()
+    {
+        if (product::all()->exists()) {
+            $data = product::all();
+            return response()->json($data->makeHidden('token'));
+        } else {
+            return response()->json([], 404);
+        }
+    }
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $product = product::findorfail($request->id);
+        return response()->json($product->makeHidden('token'));
     }
 
     /**
@@ -85,9 +105,21 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->id;
+        if (
+            $request->hasFile('file') and $request->file('file')
+            ->isValid()
+        ) {
+            product::where('id', $id)->update([
+                'pd_name' => $request->input('pd_name'),
+                'pd_desc' => $request->input('pd_desc'),
+                'pd_status' => $request->input('pd_status'),
+                'pd_img' => $request->file('file')->store('products')
+            ]);
+        }
+        return response(201);
     }
 
     /**
