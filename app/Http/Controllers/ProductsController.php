@@ -71,7 +71,7 @@ class ProductsController extends Controller
     {
         $product = $request->user_id;
         if (product::where('user_id', $product)->exists()) {
-            $data = product::find($product);
+            $data = product::where('user_id', $product)->get();
             return response()->json($data->makeHidden('token'));
         } else {
             return response()->json([], 404);
@@ -107,18 +107,15 @@ class ProductsController extends Controller
      */
     public function update(Request $request)
     {
-        $id = $request->id;
+        $req = $request->all();
         if (
             $request->hasFile('file') and $request->file('file')
             ->isValid()
         ) {
-            product::where('id', $id)->update([
-                'pd_name' => $request->input('pd_name'),
-                'pd_desc' => $request->input('pd_desc'),
-                'pd_status' => $request->input('pd_status'),
-                'pd_img' => $request->file('file')->store('products')
-            ]);
+            $req['pd_img'] = $request->file('file')->store('products');
         }
+        $product = Product::find($request->id);
+        $product->update($req);
         return response(201);
     }
 

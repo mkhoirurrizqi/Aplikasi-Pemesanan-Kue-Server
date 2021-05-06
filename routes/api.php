@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductsController;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 /*
@@ -22,12 +23,25 @@ use Illuminate\Validation\ValidationException;
 //     return $request->user();
 // });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return Auth()->user();
 });
-Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [UserController::class, 'logout']);
+});
+Route::group(['middleware' => ['auth:sanctum', 'Toko']], function () {
+    Route::get('/toko', function (Request $request) {
+        return Auth()->user();
+    });
+    Route::post('/tentangtokola', [UserController::class, 'logout']);
+});
+Route::group(['middleware' => ['auth:sanctum', 'Customer']], function () {
+    Route::get('/cus', function (Request $request) {
+        return Auth()->user();
+    });
+    Route::post('/tentangtokola', [UserController::class, 'logout']);
 });
 Route::post('/login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
 // Route::post('login', [UserController::class, 'login']);
+// product ntar masuk sanctum
 Route::post('addproduct', [ProductsController::class, 'store']);

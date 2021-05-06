@@ -43,12 +43,17 @@ class UserController extends Controller
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
-
-        $token = $user->createToken($request->device_name)->plainTextToken;
-
+        if ($user->type == "toko") {
+            $token = $user->createToken($request->device_name, ["Toko"])->plainTextToken;
+            $type = $user->type;
+        } else {
+            $token = $user->createToken($request->device_name, ["Customer"])->plainTextToken;
+            $type = $user->type;
+        }
         $response = [
             'user' => $user,
             'token' => $token,
+            'type' => $type
         ];
 
         return response($response, 201);
