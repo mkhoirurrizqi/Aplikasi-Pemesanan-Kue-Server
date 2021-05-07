@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class ProductsController extends Controller
 {
@@ -124,7 +125,10 @@ class ProductsController extends Controller
         $product->update($req);
         return response(201);
     }
-
+    public function delete(Request $request){
+        Product::where('id', $request->id)->forceDelete();
+        return response('Product Deleted', 200);
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -133,7 +137,6 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        Product::where('id', $id)->forceDelete();
-        return response(201);
+     //
     }
 }

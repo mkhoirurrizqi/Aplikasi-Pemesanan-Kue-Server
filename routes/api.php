@@ -36,6 +36,8 @@ Route::group(['middleware' => ['auth:sanctum', 'Toko']], function () {
     Route::post('/deleteproduct', [ProductsController::class, 'destroy']);
     Route::post('/productdetail', [ProductsController::class, 'show']);
     Route::post('/storeproduct', [ProductsController::class, 'showstoreproduct']);
+    
+    #allproduct masih error
     Route::get('/allproduct', [ProductsController::class, 'showall']);
     Route::post('/tentangtokola', [UserController::class, 'logout']);
 });
