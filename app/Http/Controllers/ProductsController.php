@@ -126,7 +126,8 @@ class ProductsController extends Controller
         return response(201);
     }
     public function delete(Request $request){
-        Product::where('id', $request->id)->forceDelete();
+        $product = Product::find($request->id);
+        $product->forceDelete();
         return response('Product Deleted', 200);
     }
     /**
