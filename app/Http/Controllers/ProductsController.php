@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -36,16 +37,21 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         $product = new Product;
-        $product->user_id = $request->input('user_id');
+        $product->user_id = Auth()->user()->id;
         $product->pd_name = $request->input('pd_name');
         $product->pd_desc = $request->input('pd_desc');
-        $product->pd_status = $request->input('pd_status');
-        if (
-            $request->hasFile('file') and $request->file('file')
-            ->isValid()
-        ) {
-            $product->pd_img = $request->file('file')->store('products');
-        }
+        $product->pd_status = Auth()->user()->type;
+        $product->pd_img = $request->input('pd_img');
+
+        // INI UNTUK UPLOAD FILE (BELUM BISA)
+        // if (
+        //     $request->hasFile('file') and $request->file('file')
+        //     ->isValid()
+        // ) {
+        //     $product->pd_img = $request->file('file')->store('products');
+        // }
+
+
         $product->save();
         return response($product, 201);
         // return response()->json(["token" => "sukses"]);
@@ -127,6 +133,7 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::where('id', $id)->forceDelete();
+        return response(201);
     }
 }

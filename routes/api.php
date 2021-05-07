@@ -32,6 +32,11 @@ Route::group(['middleware' => ['auth:sanctum', 'Toko']], function () {
     Route::get('/toko', function (Request $request) {
         return Auth()->user();
     });
+    Route::post('/addproduct', [ProductsController::class, 'store']);
+    Route::post('/deleteproduct', [ProductsController::class, 'destroy']);
+    Route::post('/productdetail', [ProductsController::class, 'show']);
+    Route::post('/storeproduct', [ProductsController::class, 'showstoreproduct']);
+    Route::get('/allproduct', [ProductsController::class, 'showall']);
     Route::post('/tentangtokola', [UserController::class, 'logout']);
 });
 Route::group(['middleware' => ['auth:sanctum', 'Customer']], function () {
@@ -41,7 +46,6 @@ Route::group(['middleware' => ['auth:sanctum', 'Customer']], function () {
     Route::post('/tentangtokola', [UserController::class, 'logout']);
 });
 Route::post('/login', [UserController::class, 'login']);
-Route::post('register', [UserController::class, 'register']);
+Route::post('/register', [UserController::class, 'register']);
 // Route::post('login', [UserController::class, 'login']);
 // product ntar masuk sanctum
-Route::post('addproduct', [ProductsController::class, 'store']);
