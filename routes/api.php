@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth:sanctum', 'Toko']], function () {
         return Auth()->user();
     });
     Route::post('/addproduct', [ProductsController::class, 'store']);
-    Route::post('/deleteproduct', [ProductsController::class, 'destroy']);
+    Route::post('/deleteproduct', [ProductsController::class, 'delete']);
     Route::post('/productdetail', [ProductsController::class, 'show']);
     Route::post('/storeproduct', [ProductsController::class, 'showstoreproduct']);
     
