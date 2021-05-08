@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [UserController::class, 'logout']);
+    Route::get('/allproduct', [ProductsController::class, 'showall']);
 });
 Route::group(['middleware' => ['auth:sanctum', 'Toko']], function () {
     Route::get('/toko', function (Request $request) {
@@ -43,7 +44,6 @@ Route::group(['middleware' => ['auth:sanctum', 'Customer']], function () {
     });
     #allproduct masih error
 });
-Route::get('/allproduct', [ProductsController::class, 'showall']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 // Route::post('login', [UserController::class, 'login']);
