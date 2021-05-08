@@ -36,17 +36,14 @@ Route::group(['middleware' => ['auth:sanctum', 'Toko']], function () {
     Route::post('/deleteproduct', [ProductsController::class, 'delete']);
     Route::post('/productdetail', [ProductsController::class, 'show']);
     Route::post('/storeproduct', [ProductsController::class, 'showstoreproduct']);
-    
-    #allproduct masih error
-    Route::get('/allproduct', [ProductsController::class, 'showall']);
-    Route::post('/tentangtokola', [UserController::class, 'logout']);
 });
 Route::group(['middleware' => ['auth:sanctum', 'Customer']], function () {
     Route::get('/cus', function (Request $request) {
         return Auth()->user();
     });
-    Route::post('/tentangtokola', [UserController::class, 'logout']);
+    #allproduct masih error
 });
+Route::get('/allproduct', [ProductsController::class, 'showall']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 // Route::post('login', [UserController::class, 'login']);

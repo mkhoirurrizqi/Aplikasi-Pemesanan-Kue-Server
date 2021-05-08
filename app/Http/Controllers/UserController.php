@@ -31,17 +31,18 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required',
             'device_name' => 'required'
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('username', $request->username)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
+            return ["error" => "Username or password is not matched"];
+            // throw ValidationException::withMessages([
+            //     'username' => ['The provided credentials are incorrect.'],
+            // ]);
         }
         if ($user->type == "toko") {
             $token = $user->createToken($request->device_name, ["Toko"])->plainTextToken;

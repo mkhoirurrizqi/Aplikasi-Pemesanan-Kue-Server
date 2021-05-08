@@ -40,8 +40,12 @@ class ProductsController extends Controller
         $product = new Product;
         $product->user_id = Auth()->user()->id;
         $product->pd_name = $request->input('pd_name');
+        $product->pd_harga = $request->input('pd_harga');
+        $product->pd_berat = $request->input('pd_berat');
+        $product->pd_expired = $request->input('pd_expired');
+        $product->pd_jenis = $request->input('pd_jenis');
         $product->pd_desc = $request->input('pd_desc');
-        $product->pd_status = Auth()->user()->type;
+        $product->pd_status = $request->input('pd_status');
         $product->pd_img = $request->input('pd_img');
 
         // INI UNTUK UPLOAD FILE (BELUM BISA)
@@ -125,7 +129,8 @@ class ProductsController extends Controller
         $product->update($req);
         return response(201);
     }
-    public function delete(Request $request){
+    public function delete(Request $request)
+    {
         $product = Product::find($request->id);
         $product->forceDelete();
         return response('Product Deleted', 200);
