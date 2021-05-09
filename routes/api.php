@@ -27,21 +27,23 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [UserController::class, 'logout']);
-    Route::get('/allproduct', [ProductsController::class, 'showall']);
+    Route::post('/edituser', [UserController::class, 'update']);
 });
 Route::group(['middleware' => ['auth:sanctum', 'Toko']], function () {
-    Route::get('/toko', function (Request $request) {
-        return Auth()->user();
-    });
+    // Route::get('/toko', function (Request $request) {
+    //     return Auth()->user();
+    // });
     Route::post('/addproduct', [ProductsController::class, 'store']);
     Route::post('/deleteproduct', [ProductsController::class, 'delete']);
     Route::post('/productdetail', [ProductsController::class, 'show']);
     Route::post('/storeproduct', [ProductsController::class, 'showstoreproduct']);
+    Route::post('/editproduct', [ProductsController::class, 'update']);
 });
 Route::group(['middleware' => ['auth:sanctum', 'Customer']], function () {
-    Route::get('/cus', function (Request $request) {
-        return Auth()->user();
-    });
+    // Route::get('/cus', function (Request $request) {
+    //     return Auth()->user();
+    // });
+    Route::get('/allproduct', [ProductsController::class, 'showall']);
     #allproduct masih error
 });
 Route::post('/login', [UserController::class, 'login']);

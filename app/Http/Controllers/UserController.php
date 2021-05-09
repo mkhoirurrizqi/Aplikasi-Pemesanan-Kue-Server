@@ -67,7 +67,8 @@ class UserController extends Controller
     }
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        // $request->user()->tokens()->delete();
+        $request->user()->tokens()->where('token', $request->token)->delete();
         return response('Loggedout', 200);
     }
     /**
@@ -108,11 +109,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
-    {
-        $user = User::findorfail($request->id);
-        return response()->json($user->makeHidden('token'));
-    }
+
     /**
      * Update the specified resource in storage.
      *
