@@ -28,6 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [UserController::class, 'logout']);
     Route::post('/edituser', [UserController::class, 'update']);
+    Route::post('/alluser', [UserController::class, 'showalluser']);
 });
 Route::group(['middleware' => ['auth:sanctum', 'Toko']], function () {
     // Route::get('/toko', function (Request $request) {
@@ -43,7 +44,6 @@ Route::group(['middleware' => ['auth:sanctum', 'Customer']], function () {
     // Route::get('/cus', function (Request $request) {
     //     return Auth()->user();
     // });
-    Route::get('/allstore', [UserController::class, 'showallstore']);
     Route::get('/allproduct', [ProductsController::class, 'showall']);
     #allproduct masih error
 });
