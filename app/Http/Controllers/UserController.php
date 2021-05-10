@@ -129,6 +129,7 @@ class UserController extends Controller
             "kelurahan" => $request->input("kelurahan"),
             "password" => Hash::make($request->input("password"))
         ]);
+        return response(201);
     }
 
     /**

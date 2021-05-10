@@ -73,7 +73,7 @@ class ProductsController extends Controller
             $data = product::find($product);
             return response($data, 201);
         } else {
-            return response()->json([], 404);
+            return response(404);
         }
     }
     public function showstoreproduct(Request $request)
@@ -83,7 +83,7 @@ class ProductsController extends Controller
             $data = product::where('user_id', $product)->get();
             return response($data, 201);
         } else {
-            return response()->json([], 404);
+            return response(404);
         }
     }
     public function showall()
@@ -92,7 +92,7 @@ class ProductsController extends Controller
             $data = product::all();
             return response($data, 201);
         } else {
-            return response()->json([], 404);
+            return response(404);
         }
     }
     /**
