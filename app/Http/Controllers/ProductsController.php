@@ -117,7 +117,7 @@ class ProductsController extends Controller
     public function update(Request $request)
     {
         $product_id = $request->id;
-        Product::where('user_id', $product_id)->update([
+        Product::where('id', $product_id)->update([
             "pd_name "=> $request->input('pd_name'),
             "pd_harga" => $request->input('pd_harga'),
             "pd_berat" => $request->input('pd_berat'),
