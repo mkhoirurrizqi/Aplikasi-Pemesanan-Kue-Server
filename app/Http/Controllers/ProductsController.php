@@ -55,8 +55,6 @@ class ProductsController extends Controller
         // ) {
         //     $product->pd_img = $request->file('file')->store('products');
         // }
-
-
         $product->save();
         return response($product, 201);
         // return response()->json(["token" => "sukses"]);
@@ -73,7 +71,7 @@ class ProductsController extends Controller
         $product = $request->id;
         if (product::where('id', $product)->exists()) {
             $data = product::find($product);
-            return response()->json($data->makeHidden('token'));
+            return response($data, 201);
         } else {
             return response()->json([], 404);
         }
@@ -83,7 +81,7 @@ class ProductsController extends Controller
         $product = $request->user_id;
         if (product::where('user_id', $product)->exists()) {
             $data = product::where('user_id', $product)->get();
-            return response()->json($data->makeHidden('token'));
+            return response($data, 201);
         } else {
             return response()->json([], 404);
         }
@@ -92,7 +90,7 @@ class ProductsController extends Controller
     {
         if (product::all()->exists()) {
             $data = product::all();
-            return response()->json($data->makeHidden('token'));
+            return response($data, 201);
         } else {
             return response()->json([], 404);
         }
@@ -103,11 +101,11 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
-    {
-        $product = product::findorfail($request->id);
-        return response()->json($product->makeHidden('token'));
-    }
+    // public function edit(Request $request)
+    // {
+    //     $product = product::findorfail($request->id);
+    //     return response()->json($product->makeHidden('token'));
+    // }
 
     /**
      * Update the specified resource in storage.
