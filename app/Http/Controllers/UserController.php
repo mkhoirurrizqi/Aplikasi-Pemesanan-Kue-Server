@@ -76,6 +76,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function showallstore(){
+        if(User::where('type', 'toko')->exists()){
+            $data = User::where('type', 'toko')->get();
+            return response($data, 201);
+        }
+        else{
+            return response(404);
+        }
+    }
     public function create()
     {
         //
