@@ -118,12 +118,12 @@ class ProductsController extends Controller
     {
         $product_id = $request->id;
         Product::where('id', $product_id)->update([
-            "pd_name "=> $request->input('pd_name'),
+            "pd_name"=> $request->input('pd_name'),
             "pd_harga" => $request->input('pd_harga'),
             "pd_berat" => $request->input('pd_berat'),
             "pd_expired" => $request->input('pd_expired'),
             "pd_jenis" => $request->input('pd_jenis'),
-            "pd_desc "=> $request->input('pd_desc'),
+            "pd_desc"=> $request->input('pd_desc'),
             "pd_status" => $request->input('pd_status'),
             "pd_img" => $request->input('pd_img')
         ]);
