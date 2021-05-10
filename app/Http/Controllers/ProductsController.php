@@ -116,15 +116,17 @@ class ProductsController extends Controller
      */
     public function update(Request $request)
     {
-        $req = $request->all();
-        if (
-            $request->hasFile('file') and $request->file('file')
-            ->isValid()
-        ) {
-            $req['pd_img'] = $request->file('file')->store('products');
-        }
-        $product = Product::find($request->id);
-        $product->update($req);
+        $product_id = $request->id;
+        Product::where('user_id', $product_id)->update([
+            "pd_name "=> $request->input('pd_name'),
+            "pd_harga" => $request->input('pd_harga'),
+            "pd_berat" => $request->input('pd_berat'),
+            "pd_expired" => $request->input('pd_expired'),
+            "pd_jenis" => $request->input('pd_jenis'),
+            "pd_desc "=> $request->input('pd_desc'),
+            "pd_status" => $request->input('pd_status'),
+            "pd_img" => $request->input('pd_img')
+        ]);
         return response(201);
     }
     public function delete(Request $request)
