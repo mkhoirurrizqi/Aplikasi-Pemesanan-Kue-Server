@@ -46,7 +46,6 @@ class ProductsController extends Controller
         $product->pd_jenis = $request->input('pd_jenis');
         $product->pd_desc = $request->input('pd_desc');
         $product->pd_status = $request->input('pd_status');
-        $product->pd_img = $request->input('pd_img');
 
         // INI UNTUK UPLOAD FILE (BELUM BISA)
         // if (
@@ -125,7 +124,6 @@ class ProductsController extends Controller
             "pd_jenis" => $request->input('pd_jenis'),
             "pd_desc" => $request->input('pd_desc'),
             "pd_status" => $request->input('pd_status'),
-            "pd_img" => $request->input('pd_img')
         ]);
         return response(200);
     }
