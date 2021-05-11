@@ -29,6 +29,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [UserController::class, 'logout']);
     Route::post('/edituser', [UserController::class, 'update']);
     Route::post('/alluser', [UserController::class, 'showalluser']);
+    Route::post('/productdetail', [ProductsController::class, 'show']);
+    Route::post('/storeproduct', [ProductsController::class, 'showstoreproduct']);
 });
 Route::group(['middleware' => ['auth:sanctum', 'Toko']], function () {
     // Route::get('/toko', function (Request $request) {
@@ -36,8 +38,6 @@ Route::group(['middleware' => ['auth:sanctum', 'Toko']], function () {
     // });
     Route::post('/addproduct', [ProductsController::class, 'store']);
     Route::post('/deleteproduct', [ProductsController::class, 'delete']);
-    Route::post('/productdetail', [ProductsController::class, 'show']);
-    Route::post('/storeproduct', [ProductsController::class, 'showstoreproduct']);
     Route::post('/editproduct', [ProductsController::class, 'update']);
 });
 Route::group(['middleware' => ['auth:sanctum', 'Customer']], function () {
