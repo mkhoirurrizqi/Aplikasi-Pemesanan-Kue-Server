@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum', 'Customer']], function () {
     // Route::get('/cus', function (Request $request) {
     //     return Auth()->user();
     // });
+    Route::post('/gettoko', [UserController::class, 'usertoko']);
     Route::get('/allproduct', [ProductsController::class, 'showall']);
     #allproduct masih error
 });

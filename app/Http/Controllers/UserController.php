@@ -76,7 +76,8 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showalluser(Request $request){
+    public function showalluser(Request $request)
+    {
         $type = $request->type;
         if (User::where('type', $type)->exists()) {
             $data = User::where('type', $type)->get();
@@ -85,9 +86,15 @@ class UserController extends Controller
             return response(404);
         }
     }
-    public function create()
+    public function usertoko(Request $request)
     {
-        //
+        $id = $request->user_id;
+        if (User::where('id', $id)->exists()) {
+            $data = User::where('id', $id)->get();
+            return response($data, 201);
+        } else {
+            return response(404);
+        }
     }
 
     /**
