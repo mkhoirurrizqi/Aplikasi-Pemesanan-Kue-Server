@@ -2,7 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductsController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +19,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return Auth()->user();
 });
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/logout', [UserController::class, 'logout']);
+    Route::post('/edituser', [UserController::class, 'update']);
+    Route::post('/alluser', [UserController::class, 'showalluser']);
+    Route::post('/productdetail', [ProductsController::class, 'show']);
+    Route::post('/storeproduct', [ProductsController::class, 'showstoreproduct']);
+});
+Route::group(['middleware' => ['auth:sanctum', 'Toko']], function () {
+    // Route::get('/toko', function (Request $request) {
+    //     return Auth()->user();
+    // });
+    Route::post('/addproduct', [ProductsController::class, 'store']);
+    Route::post('/deleteproduct', [ProductsController::class, 'delete']);
+    Route::post('/editproduct', [ProductsController::class, 'update']);
+});
+Route::group(['middleware' => ['auth:sanctum', 'Customer']], function () {
+    // Route::get('/cus', function (Request $request) {
+    //     return Auth()->user();
+    // });
+    Route::post('/gettoko', [UserController::class, 'usertoko']);
+    Route::get('/allproduct', [ProductsController::class, 'showall']);
+    #allproduct masih error
+});
+Route::post('/login', [UserController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
+// Route::post('login', [UserController::class, 'login']);
+// product ntar masuk sanctum
